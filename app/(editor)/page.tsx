@@ -9,9 +9,7 @@ import {
   Background,
   BackgroundVariant,
   NodeToolbar,
-  Handle,
   Position,
-  Controls,
   Panel,
   useReactFlow,
 } from "@xyflow/react";
@@ -27,7 +25,7 @@ const initialNodes = [
 const initialEdges = [{ id: "n1-n2", source: "n1", target: "n2" }];
 
 export default function EditorPage() {
-  const { zoomIn, zoomOut, zoomTo, getZoom, fitView } = useReactFlow();
+  const { zoomIn, zoomOut, fitView } = useReactFlow();
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
 
@@ -60,7 +58,7 @@ export default function EditorPage() {
   return (
     <>
       {selectedId}
-      <div className="w-[80vw] h-[500px] border-1">
+      <div className="h-[500px] w-[80vw] border-1">
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -79,8 +77,8 @@ export default function EditorPage() {
 
           {/* 自定义控制台 */}
           <Panel
-            position="bottom-right"
-            className="zoom-bar nopan border-[#dfe3e6] border p-[0_6px] bg-[#ebeff1] rounded-md flex"
+            position="top-right"
+            className="zoom-bar nopan flex rounded-md border border-[#dfe3e6] bg-[#ebeff1] p-[0_6px]"
           >
             <Button
               variant="ghost"
@@ -98,11 +96,11 @@ export default function EditorPage() {
             </Button>
             <Separator
               orientation="vertical"
-              className="mx-1 bg-[#dfe3e6] !w-[2px] my-1.5"
+              className="mx-1 my-1.5 !w-[2px] bg-[#dfe3e6]"
             />
             <Button
               variant="ghost"
-              className="px-1 text-[#696b71] font-mono text-[12px]"
+              className="px-1 font-mono text-[12px] text-[#696b71]"
               onClick={() => fitView({ padding: 0.2, duration: 300 })}
             >
               fit
