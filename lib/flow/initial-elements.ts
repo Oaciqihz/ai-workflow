@@ -4,7 +4,15 @@ import type { FlowEdge, FlowNode } from "@/types/flow";
 export const initialNodes: FlowNode[] = [
   { id: "n1", position: { x: 0, y: 0 }, data: { label: "Node 1" } },
   { id: "n2", position: { x: 0, y: 100 }, data: { label: "Node 2" } },
-  { id: "n3", position: { x: 0, y: 300 }, data: { label: "Node 3" } },
+  // 自定义节点示例：type 需在 components/editor/nodes/index.ts 注册
+  // style 里的宽高是缩放前的初始尺寸，拖拽四个角后由 xyflow 覆盖
+  {
+    id: "n3",
+    type: "text",
+    position: { x: 280, y: 220 },
+    style: { width: 224, height: 96 },
+    data: { label: "文本" },
+  },
 ];
 
 /** 画布初始连线 */

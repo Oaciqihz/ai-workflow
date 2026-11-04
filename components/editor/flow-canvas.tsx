@@ -5,10 +5,13 @@ import { Background, BackgroundVariant, ReactFlow } from "@xyflow/react";
 import { cn } from "cn";
 
 import { SelectedNodeToolbar } from "@/components/editor/node-toolbar";
+import { nodeTypes } from "@/components/editor/nodes";
 import { ZoomPanel } from "@/components/editor/zoom-panel";
 import { useFlow } from "@/hooks/use-flow";
 import { useFlowSelection } from "@/hooks/use-flow-selection";
 import { initialEdges, initialNodes } from "@/lib/flow/initial-elements";
+
+import "./flow-canvas.css";
 
 type FlowCanvasProps = {
   className?: string;
@@ -41,6 +44,7 @@ export function FlowCanvas({ className }: FlowCanvasProps) {
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}

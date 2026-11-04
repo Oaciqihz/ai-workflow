@@ -1,0 +1,56 @@
+/* 画布节点样式：连接点的显隐 + 命中范围 */
+
+/* 默认隐藏，hover / 选中 / 连线中才显示。
+   只用 opacity，不用 display:none —— xyflow 靠 Handle 的 getBoundingClientRect
+   算连线端点，元素脱离布局会量到 0，边会塌到节点中心。 */
+.react-flow__node .react-flow__handle {
+  opacity: 0;
+  transition: opacity 120ms ease;
+  width: 8px;
+  height: 8px;
+}
+
+/* 鼠标进入节点、节点被选中；以及 drag 出连线时的 source（connectingfrom）
+   和当前悬停的 target（connectingto）—— 否则鼠标一离开节点、还没松手，handle 就消失了 */
+.react-flow__node:hover .react-flow__handle,
+.react-flow__node.selected .react-flow__handle,
+.react-flow__node .react-flow__handle.connectingfrom,
+.react-flow__node .react-flow__handle.connectingto {
+  opacity: 1;
+}
+
+/* 隐藏状态下别拦点击：只在「没 hover、没选中」时降级 pointer-events，
+   hover 之后仍由 xyflow 自己的规则决定（源 handle 可拖、目标 handle 不可点） */
+.react-flow__node:not(:hover):not(.selected)
+  .react-flow__handle:not(.connectingfrom):not(.connectingto) {
+  pointer-events: none;
+}
+
+/* 放大起点命中范围：视觉上还是 6px 圆点，热区 20px，更容易按住拖出连线。
+   伪元素不参与 getBoundingClientRect 的外扩，所以 xyflow 记录的 handle 尺寸
+   和连线端点位置都不受影响。 */
+.react-flow__handle::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border-radius: 999px;
+}
+
+/* ---------- 缩放控制点（NodeResizeControl） ---------- */
+/* 默认 5px 太难拖：视觉放大到 8px，再用伪元素把命中区撑到 20px。
+   尺寸安全——xyflow 的缩放靠 node.width/height 加指针位移算，
+   不读控制点自身的 rect，所以放大不会让缩放边界漂移。 */
+.react-flow__node .react-flow__resize-control.handle {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  border-color: #fff;
+  background-color: #3b82f6;
+}
+
+.react-flow__resize-control.handle::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 999px;
+}
